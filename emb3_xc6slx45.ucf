@@ -1,0 +1,139 @@
+
+###################################################
+##						FPGA board IO						 ##
+
+# Clock input
+NET "clk_200M_i" LOC = A11 | IOSTANDARD = LVCMOS33;
+NET "clk_200M_i" TNM_NET = "clk_200M_i";
+TIMESPEC TS_clk_200M_i = PERIOD "clk_200M_i" 200 MHz HIGH 50 %;
+
+### FT232H USB Single Channel Hi-Speed USB to Multipurpose UART/FIFO IC
+#NET "ft232h_rst_o"		LOC = "A6" | IOSTANDARD = LVCMOS33; #FT232H_RESET (active low reset)
+#NET "ft232h_acbus7_i"	LOC = "C8" | IOSTANDARD = LVCMOS33; #FT232H_ACBUS7 (FT232H chip goes into suspend mode when ACBUS7 is '0'), FPGA pin MUST be configured as high impedance.
+#
+## FT232H UART/RS232 Interface Mode:
+#NET "ft232h_rs232_rx_i"	LOC = "C14"| IOSTANDARD = LVCMOS33; #FT232H ADBUS0 (RS232 mode: TX output)
+#NET "ft232h_rs232_tx_o"	LOC = "A12"| IOSTANDARD = LVCMOS33; #FT232H ADBUS1 (RS232 mode: RX input)
+
+# LEDs
+NET "led_o<0>"  	LOC = "B6" | IOSTANDARD = LVCMOS33; #LED1
+NET "led_o<1>"  	LOC = "A5" | IOSTANDARD = LVCMOS33; #LED2
+NET "led_o<2>"  	LOC = "A8" | IOSTANDARD = LVCMOS33; #LED3
+NET "led_o<3>"  	LOC = "B8" | IOSTANDARD = LVCMOS33; #LED4
+#NET "led_o<4>"  	LOC = "C7" | IOSTANDARD = LVCMOS33; #LED5
+#NET "led_o<5>"  	LOC = "A4" | IOSTANDARD = LVCMOS33; #LED6
+#NET "led_o<6>"  	LOC = "D7" | IOSTANDARD = LVCMOS33; #LED7
+
+##################################################
+
+###################################################
+##						Base board IO						 ##
+
+## S1, Dip-Switch
+NET "dip_sw_i<0>"	LOC = "A21" | IOSTANDARD = LVCMOS33; #DIP1 (has external pull-down)
+NET "dip_sw_i<1>"	LOC = "A20" | IOSTANDARD = LVCMOS33; #DIP2 (has external pull-down)
+NET "dip_sw_i<2>"	LOC = "B20" | IOSTANDARD = LVCMOS33; #DIP3 (has external pull-down)
+NET "dip_sw_i<3>"	LOC = "C19" | IOSTANDARD = LVCMOS33; #DIP4 (has external pull-down)
+
+### P7 (Digilent 12 (8) pin connector)
+##NET "p7_io<0>"		LOC = "D21" | IOSTANDARD = LVCMOS33; #P7_1
+##NET "p7_io<1>"		LOC = "B22" | IOSTANDARD = LVCMOS33; #P7_2
+##NET "p7_io<2>"		LOC = "C20" | IOSTANDARD = LVCMOS33; #P7_3
+##NET "p7_io<3>"		LOC = "B21" | IOSTANDARD = LVCMOS33; #P7_4
+##NET "p7_io<4>"		LOC = "F21" | IOSTANDARD = LVCMOS33; #P7_7
+##NET "p7_io<5>"		LOC = "D22" | IOSTANDARD = LVCMOS33; #P7_8
+##NET "p7_io<6>"		LOC = "E20" | IOSTANDARD = LVCMOS33; #P7_9
+##NET "p7_io<7>"		LOC = "C22" | IOSTANDARD = LVCMOS33; #P7_10
+#
+### P8 (Digilent 12 (8) pin connector)
+##NET "p8_io<0>"		LOC = "D1" | IOSTANDARD = LVCMOS33; #P8_1
+##NET "p8_io<1>"		LOC = "E3" | IOSTANDARD = LVCMOS33; #P8_2
+##NET "p8_io<2>"		LOC = "E1" | IOSTANDARD = LVCMOS33; #P8_3
+##NET "p8_io<3>"		LOC = "F2" | IOSTANDARD = LVCMOS33; #P8_4
+##NET "p8_io<4>"		LOC = "B1" | IOSTANDARD = LVCMOS33; #P8_7
+##NET "p8_io<5>"		LOC = "C3" | IOSTANDARD = LVCMOS33; #P8_8
+##NET "p8_io<6>"		LOC = "C1" | IOSTANDARD = LVCMOS33; #P8_9
+##NET "p8_io<7>"		LOC = "D2" | IOSTANDARD = LVCMOS33; #P8_10
+#
+###	J7 pin-header, used for: add-on board (PS2, Dip-Switches, Buttons)
+#
+## Switches
+#NET "j7_dip_sw_i<0>"  		LOC = "C6" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #J7-DIP1 (S1) N.B. REQUIRES PULL-UP 
+#NET "j7_dip_sw_i<1>"  		LOC = "C5" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #J7-DIP2 (S1) N.B. REQUIRES PULL-UP 
+#NET "j7_dip_sw_i<2>"  		LOC = "D6" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #J7-DIP3 (S1) N.B. REQUIRES PULL-UP 
+#NET "j7_dip_sw_i<3>"  		LOC = "H8" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #J7-DIP4 (S1) N.B. REQUIRES PULL-UP 
+#NET "j7_dip_sw_i<4>"  		LOC = "H6" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #J7-DIP5 (S1) N.B. REQUIRES PULL-UP 
+#NET "j7_dip_sw_i<5>"  		LOC = "F3" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #J7-DIP6 (S1) N.B. REQUIRES PULL-UP 
+#NET "j7_dip_sw_i<6>"  		LOC = "G4" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #J7-DIP7 (S1) N.B. REQUIRES PULL-UP 
+#NET "j7_dip_sw_i<7>"  		LOC = "G6" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #J7-DIP8 (S1) N.B. REQUIRES PULL-UP 
+#
+## Buttons
+#NET "j7_btn_i<0>"	 			LOC = "J4" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #BTN0 (S2) N.B. REQUIRES PULL-UP 
+#NET "j7_btn_i<1>"	 			LOC = "H5" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #BTN1 (S3) N.B. REQUIRES PULL-UP 
+#
+## PS2 input
+#NET "j7_ps2_data_io"			LOC = "H3" | IOSTANDARD = LVCMOS33; #PS2-Data (P1)
+#NET "j7_ps2_clk_io"			LOC = "H4" | IOSTANDARD = LVCMOS33; #PS2-CLK  (P1)
+#
+### J8 pin-header, used for: VGA-Output board
+#
+#NET "j8_vga_hsync_o"			LOC = "K18" | IOSTANDARD = LVCMOS33; #HSYNC (J1)
+#NET "j8_vga_vsync_o"			LOC = "L19" | IOSTANDARD = LVCMOS33; #VSYNC (J1)
+#
+#NET "j8_vga_red_o<0>"		LOC = "J19" | IOSTANDARD = LVCMOS33; #RED0 (J1)
+#NET "j8_vga_red_o<1>"		LOC = "H18" | IOSTANDARD = LVCMOS33; #RED1 (J1)
+#NET "j8_vga_red_o<2>"		LOC = "H20" | IOSTANDARD = LVCMOS33; #RED2 (J1)
+#
+#NET "j8_vga_green_o<0>"		LOC = "J17" | IOSTANDARD = LVCMOS33; #GREEN0 (J1)
+#NET "j8_vga_green_o<1>"		LOC = "F20" | IOSTANDARD = LVCMOS33; #GREEN1 (J1)
+#NET "j8_vga_green_o<2>"		LOC = "H19" | IOSTANDARD = LVCMOS33; #GREEN2 (J1)
+#
+#NET "j8_vga_blue_o<0>"		LOC = "K20" | IOSTANDARD = LVCMOS33; #BLUE0 (J1)
+#NET "j8_vga_blue_o<1>"		LOC = "G19" | IOSTANDARD = LVCMOS33; #BLUE1 (J1)
+#NET "j8_vga_blue_o<2>"		LOC = "K19" | IOSTANDARD = LVCMOS33; #BLUE2 (J1)
+#
+### FX2 connector, used for: ADC-board (VGA-Input)
+#
+#NET "fx2_vga_hsync_i"		LOC = "W3" 	| IOSTANDARD = LVCMOS33; #HSYNC -> IO_5 -> A_44 -> FX2_A44 -> W3
+#NET "fx2_vga_vsync_i"		LOC = "AA6" | IOSTANDARD = LVCMOS33; #VSYNC -> IO_7 -> B_48 -> FX2_B48 -> AA6
+#
+##VGA RED -> A_VIN+ (ADC A)
+#NET "fx2_vga_red_clk_o"		LOC = "W20"	| IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 6; #FX2_A6 -> W20
+#NET "fx2_vga_red_i<0>"		LOC = "V21"	| IOSTANDARD = LVCMOS33; #FX2_A7 -> V21
+#NET "fx2_vga_red_i<1>"		LOC = "W22"	| IOSTANDARD = LVCMOS33; #FX2_A8 -> W22
+#NET "fx2_vga_red_i<2>"		LOC = "U20"	| IOSTANDARD = LVCMOS33; #FX2_A9 -> U20
+#NET "fx2_vga_red_i<3>"		LOC = "V22"	| IOSTANDARD = LVCMOS33; #FX2_A10 -> V22
+#NET "fx2_vga_red_i<4>"		LOC = "T21"	| IOSTANDARD = LVCMOS33; #FX2_A11 -> T21
+#NET "fx2_vga_red_i<5>"		LOC = "U22"	| IOSTANDARD = LVCMOS33; #FX2_A12 -> U22
+#NET "fx2_vga_red_i<6>"		LOC = "R20"	| IOSTANDARD = LVCMOS33; #FX2_A13 -> R20
+#NET "fx2_vga_red_i<7>"		LOC = "T22"	| IOSTANDARD = LVCMOS33; #FX2_A14 -> T22
+#NET "fx2_vga_red_i<8>"		LOC = "P21"	| IOSTANDARD = LVCMOS33; #FX2_A15 -> P21
+#NET "fx2_vga_red_i<9>"		LOC = "R22"	| IOSTANDARD = LVCMOS33; #FX2_A16 -> R22
+#
+##VGA GREEN -> B_VIN+ (ADC B)
+#NET "fx2_vga_green_clk_o"	LOC = "N20"	| IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 6; #FX2_A17 -> N20
+#NET "fx2_vga_green_i<0>"	LOC = "P22"	| IOSTANDARD = LVCMOS33; #FX2_A18 -> P22
+#NET "fx2_vga_green_i<1>"	LOC = "M21"	| IOSTANDARD = LVCMOS33; #FX2_A19 -> M21
+#NET "fx2_vga_green_i<2>"	LOC = "N22"	| IOSTANDARD = LVCMOS33; #FX2_A20 -> N22
+#NET "fx2_vga_green_i<3>"	LOC = "M22"	| IOSTANDARD = LVCMOS33; #FX2_A21 -> M22
+#NET "fx2_vga_green_i<4>"	LOC = "L22"	| IOSTANDARD = LVCMOS33; #FX2_A22 -> L22
+#NET "fx2_vga_green_i<5>"	LOC = "K22"	| IOSTANDARD = LVCMOS33; #FX2_A23 -> K22
+#NET "fx2_vga_green_i<6>"	LOC = "L20"	| IOSTANDARD = LVCMOS33; #FX2_A24 -> L20
+#NET "fx2_vga_green_i<7>"	LOC = "J22"	| IOSTANDARD = LVCMOS33; #FX2_A25 -> J22
+#NET "fx2_vga_green_i<8>"	LOC = "K1"	| IOSTANDARD = LVCMOS33; #FX2_A26 -> K1
+#NET "fx2_vga_green_i<9>"	LOC = "L3"	| IOSTANDARD = LVCMOS33; #FX2_A27 -> L3
+#
+##VGA BLUE -> C_VIN+ (ADC C)
+#NET "fx2_vga_blue_clk_o"	LOC = "L1"	| IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 6; #FX2_A28 -> L1
+#NET "fx2_vga_blue_i<0>"		LOC = "M1"	| IOSTANDARD = LVCMOS33; #FX2_A29 -> M1
+#NET "fx2_vga_blue_i<1>"		LOC = "M2"	| IOSTANDARD = LVCMOS33; #FX2_A30 -> M2
+#NET "fx2_vga_blue_i<2>"		LOC = "N1"	| IOSTANDARD = LVCMOS33; #FX2_A31 -> N1
+#NET "fx2_vga_blue_i<3>"		LOC = "N3"	| IOSTANDARD = LVCMOS33; #FX2_A32 -> N3
+#NET "fx2_vga_blue_i<4>"		LOC = "P1"	| IOSTANDARD = LVCMOS33; #FX2_A33 -> P1
+#NET "fx2_vga_blue_i<5>"		LOC = "P2"	| IOSTANDARD = LVCMOS33; #FX2_A34 -> P2
+#NET "fx2_vga_blue_i<6>"		LOC = "R1"	| IOSTANDARD = LVCMOS33; #FX2_A35 -> R1
+#NET "fx2_vga_blue_i<7>"		LOC = "R3"	| IOSTANDARD = LVCMOS33; #FX2_A36 -> R3
+#NET "fx2_vga_blue_i<8>"		LOC = "T1"	| IOSTANDARD = LVCMOS33; #FX2_A37 -> T1
+#NET "fx2_vga_blue_i<9>"		LOC = "T2"	| IOSTANDARD = LVCMOS33; #FX2_A38 -> T2
+#
+####################################################

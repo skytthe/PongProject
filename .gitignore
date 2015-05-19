@@ -41,3 +41,52 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+
+
+# =========================
+# Xilinx
+# =========================
+_ngo
+_xmsgs
+ipcore_dir
+iseconfig
+xlnx_auto_0_xdb
+xst
+
+*.xml
+*.log
+*.html
+*.txt
+*.csv
+*.ngm
+*.ncd
+*.xrpt
+*.mrp
+*.map
+*.xwbt
+*.xst
+*.xpi
+*.ut
+*.unroutes
+*.twx
+*.twr
+*.xsl
+*.bgn
+*.bit
+*.bld
+*.cmd_log
+*.drc
+*.lso
+*.ngc
+*.ngd
+*.ngr
+*.pad
+*.par
+*.pcf
+*.prj
+*.ptwx
+*.stx
+*.syr
+*.gise
+*.xise
