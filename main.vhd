@@ -25,29 +25,29 @@ entity main is
 		
 		-- J7-connector: Digital (PS/2, 8-bit dip-switch, 2x push-buttons) expantion board io
 		j7_dip_sw_i 			: in  	std_logic_vector (7 downto 0);
-		j7_btn_i 				: in  	std_logic_vector (1 downto 0)
+		j7_btn_i 				: in  	std_logic_vector (1 downto 0);
 --		j7_ps2_clk_io			: inout  std_logic;
 --		j7_ps2_data_io			: inout  std_logic;
 		
 		-- J8-connector: VGA-output expantion board
---		j8_vga_hsync_o			: out		std_logic;
---		j8_vga_vsync_o			: out		std_logic;
---		j8_vga_r_o				: out		std_logic_vector (2 downto 0);
---		j8_vga_g_o				: out		std_logic_vector (2 downto 0);
---		j8_vga_b_o				: out		std_logic_vector (2 downto 0);
+		j8_vga_hsync_o			: out		std_logic;
+		j8_vga_vsync_o			: out		std_logic;
+		j8_vga_r_o				: out		std_logic_vector (2 downto 0);
+		j8_vga_g_o				: out		std_logic_vector (2 downto 0);
+		j8_vga_b_o				: out		std_logic_vector (2 downto 0);
 		
 		-- FX2-connector: VGA ADC input board
---		fx2_vga_hsync_i		: in		std_logic;
---		fx2_vga_vsync_i		: in		std_logic;
+		fx2_vga_hsync_i		: in		std_logic;
+		fx2_vga_vsync_i		: in		std_logic;
 		
---		fx2_vga_r_clk_o		: out		std_logic;
---		fx2_vga_r_i				: in 		std_logic_vector (9 downto 0);
+		fx2_vga_r_clk_o		: out		std_logic;
+		fx2_vga_r_i			: in 		std_logic_vector (9 downto 0);
 
---		fx2_vga_g_clk_o		: out		std_logic;
---		fx2_vga_g_i				: in 		std_logic_vector (9 downto 0);
+		fx2_vga_g_clk_o		: out		std_logic;
+		fx2_vga_g_i			: in 		std_logic_vector (9 downto 0);
 
---		fx2_vga_b_clk_o		: out		std_logic;
---		fx2_vga_b_i				: in 		std_logic_vector (9 downto 0)	
+		fx2_vga_b_clk_o		: out		std_logic;
+		fx2_vga_b_i			: in 		std_logic_vector (9 downto 0)	
 	);
 end main;
 
@@ -68,13 +68,16 @@ architecture Behavioral of main is
 
 
 	------------------------------------------------------
-	-- Signals											------------
+	-- Signals							 		------------
 	------------------------------------------------------
-	-- Clocks											
+	-- Clocks									  		
 	signal clk_40M 		: std_logic;
 	signal clk_40M_180	: std_logic;
 	-- mixed												
 	signal debug_wire 	: std_logic_vector(6 downto 0);
+	-- VGA busses		[hsync,vsync,data] MSB
+	signal bus_vga_sampler	: std_logic_vector(2 downto 0);
+	signal bus_vga_filter	: std_logic_vector(2 downto 0);
 	------------------------------------------------------
 
 begin
@@ -84,19 +87,61 @@ begin
 		-- Clock in ports
 		clk_200M_i 	=> clk_200M_i,
 		-- Clock out ports
-		clk_40M 		=> clk_40M,
+		clk_40M 	=> clk_40M,
 		clk_40M_180 => clk_40M_180
 	);	
 	
-	debug : entity work.debug
+	vga_sampler : entity work.VGA_sampler
 	generic map(
 		C_CLK_FREQ_HZ     => 40000000
 	)
 	port map(
-		clk_i 	=> clk_40M,
-		debug_i 	=> debug_wire,
-		led_o		=> led_o
+		clk_i       => clk_40M,
+	    vga_hsync_i => fx2_vga_hsync_i,
+		vga_vsync_i => fx2_vga_vsync_i,
+		vga_r_clk_o => fx2_vga_r_clk_o,
+		vga_r_i     => fx2_vga_r_i,
+		vga_g_clk_o => fx2_vga_g_clk_o,
+		vga_g_i     => fx2_vga_g_i,
+		vga_b_clk_o => fx2_vga_b_clk_o,
+		vga_b_i     => fx2_vga_b_i,
+		vga_hsync_o => bus_vga_sampler(0),
+		vga_vsync_o => bus_vga_sampler(1),
+		vga_data_o	=> bus_vga_sampler(2)
 	);
+	
+	filter: entity work.filter
+	generic map(
+		C_CLK_FREQ_HZ     => 40000000
+	)
+	port map(
+		clk_i       => clk_40M,
+		vga_hsync_i => bus_vga_sampler(0),
+		vga_vsync_i => bus_vga_sampler(1),
+		vga_data_i  => bus_vga_sampler(2),
+		vga_hsync_o => bus_vga_filter(0),
+		vga_vsync_o => bus_vga_filter(1),
+		vga_data_o  => bus_vga_filter(2)
+	);
+	
+	graphics_engine : entity work.graphics_engine
+	generic map(
+		C_CLK_FREQ_HZ     => 40000000
+	)
+	port map(
+		clk_i       => clk_40M,
+	    vga_hsync_i => bus_vga_filter(0),
+	    vga_vsync_i => bus_vga_filter(1),
+	    vga_data_i  => bus_vga_filter(2),
+	    vga_hsync_o => j8_vga_hsync_o,
+	    vga_vsync_o => j8_vga_vsync_o,
+	    vga_r_o     => j8_vga_r_o,
+	    vga_g_o     => j8_vga_g_o,
+	    vga_b_o     => j8_vga_b_o
+	);
+	
+	
+	
 	
 	user_input : entity work.user_input
 	generic map(
@@ -108,6 +153,16 @@ begin
 		dip8_i		=> j7_dip_sw_i,
 		btn_i 		=> j7_btn_i,
 		control_o	=> debug_wire
+	);
+	
+	debug : entity work.debug
+	generic map(
+		C_CLK_FREQ_HZ     => 40000000
+	)
+	port map(
+		clk_i 	=> clk_40M,
+		debug_i 	=> debug_wire,
+		led_o		=> led_o
 	);
 
 end Behavioral;
