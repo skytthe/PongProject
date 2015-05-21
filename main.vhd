@@ -2,6 +2,9 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
+Library UNISIM;
+use UNISIM.vcomponents.all;
+
 entity main is
 	port(
 		-- onboard clock input
@@ -40,32 +43,18 @@ entity main is
 		fx2_vga_hsync_i		: in		std_logic;
 		fx2_vga_vsync_i		: in		std_logic;
 		
-		fx2_vga_r_clk_o		: out		std_logic;
-		fx2_vga_r_i			: in 		std_logic_vector (9 downto 0);
+		fx2_adc_r_clk_o		: out		std_logic;
+		fx2_adc_r_msb_i		: in 		std_logic;
 
-		fx2_vga_g_clk_o		: out		std_logic;
-		fx2_vga_g_i			: in 		std_logic_vector (9 downto 0);
+		fx2_adc_g_clk_o		: out		std_logic;
+		fx2_adc_g_msb_i		: in 		std_logic;
 
-		fx2_vga_b_clk_o		: out		std_logic;
-		fx2_vga_b_i			: in 		std_logic_vector (9 downto 0)	
+		fx2_adc_b_clk_o		: out		std_logic;
+		fx2_adc_b_msb_i		: in 		std_logic	
 	);
 end main;
 
 architecture Behavioral of main is
-	---------------------------------
-	-- Components			------------
-	---------------------------------
-	component dcm
-	port(
-		-- Clock in ports
-		clk_200M_i		: in	std_logic;
-		-- Clock out ports
-		clk_40M  		: out	std_logic;
-		clk_40M_180		: out	std_logic
-	);
-	end component;
-	---------------------------------
-
 
 	------------------------------------------------------
 	-- Signals							 		------------
@@ -73,6 +62,10 @@ architecture Behavioral of main is
 	-- Clocks									  		
 	signal clk_40M 		: std_logic;
 	signal clk_40M_180	: std_logic;
+	-- ADC clocks
+	signal adc_40M_vga_r	: std_logic;
+	signal adc_40M_vga_g	: std_logic;
+	signal adc_40M_vga_b	: std_logic;
 	-- mixed												
 	signal debug_wire 	: std_logic_vector(6 downto 0);
 	-- VGA busses		[hsync,vsync,data] MSB
@@ -82,29 +75,37 @@ architecture Behavioral of main is
 
 begin
 
-	dcm_40M : dcm
-	port map(	
-		-- Clock in ports
-		clk_200M_i 	=> clk_200M_i,
-		-- Clock out ports
-		clk_40M 	=> clk_40M,
-		clk_40M_180 => clk_40M_180
-	);	
+	clk_resources : entity work.clock_resources
+	port map(
+		clk_200M_i 			=> clk_200M_i,
+		clk_40M_o			=> clk_40M,
+		clk_40M_180_o		=> clk_40M_180,
+		adc_40M_vga_r_o	=> adc_40M_vga_r,
+		adc_40M_vga_g_o	=> adc_40M_vga_g,
+		adc_40M_vga_b_o	=> adc_40M_vga_b
+	);
+	
+	
+	fx2_adc_r_clk_o <= adc_40M_vga_r;
+	fx2_adc_g_clk_o <= adc_40M_vga_g;
+	fx2_adc_b_clk_o <= adc_40M_vga_b;
 	
 	vga_sampler : entity work.VGA_sampler
 	generic map(
-		C_CLK_FREQ_HZ     => 40000000
+		C_CLK_FREQ_HZ  => 40000000,
+		delay 			=> 5
 	)
 	port map(
 		clk_i       => clk_40M,
-	    vga_hsync_i => fx2_vga_hsync_i,
+		control_i 	=> dip_sw_i,
+	   vga_hsync_i => fx2_vga_hsync_i,
 		vga_vsync_i => fx2_vga_vsync_i,
-		vga_r_clk_o => fx2_vga_r_clk_o,
-		vga_r_i     => fx2_vga_r_i,
-		vga_g_clk_o => fx2_vga_g_clk_o,
-		vga_g_i     => fx2_vga_g_i,
-		vga_b_clk_o => fx2_vga_b_clk_o,
-		vga_b_i     => fx2_vga_b_i,
+		vga_r_clk_o => open,
+		vga_r_i     => fx2_adc_r_msb_i,
+		vga_g_clk_o => open,
+		vga_g_i     => fx2_adc_g_msb_i,
+		vga_b_clk_o => open,
+		vga_b_i     => fx2_adc_b_msb_i,
 		vga_hsync_o => bus_vga_sampler(0),
 		vga_vsync_o => bus_vga_sampler(1),
 		vga_data_o	=> bus_vga_sampler(2)

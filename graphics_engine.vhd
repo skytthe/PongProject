@@ -8,7 +8,7 @@ entity graphics_engine is
 	);
 	port(
 		--
-		clk_i	 		: in  std_logic;
+		clk_i	 			: in  std_logic;
 		--
 		vga_hsync_i		: in  std_logic;
 		vga_vsync_i		: in  std_logic;
@@ -25,14 +25,15 @@ end graphics_engine;
 architecture Behavioral of graphics_engine is
 
 begin
+
 	name : process (clk_i) is
 	begin
 		if rising_edge(clk_i) then
 			vga_hsync_o <= vga_hsync_i;
 			vga_vsync_o <= vga_vsync_i;
-			vga_r_o  <= vga_data_i & vga_data_i & vga_b_o;
-			vga_g_o  <= vga_data_i & vga_data_i & vga_b_o;
-			vga_b_o  <= vga_data_i & vga_data_i & vga_b_o;
+			vga_r_o  <= vga_data_i & vga_data_i & vga_data_i;
+			vga_g_o  <= vga_data_i & vga_data_i & vga_data_i;
+			vga_b_o  <= vga_data_i & vga_data_i & vga_data_i;
 		end if;
 	end process name;
 	
