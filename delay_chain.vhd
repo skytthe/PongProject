@@ -2,10 +2,10 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity sliding_average is
-end sliding_average;
+entity delay_chain is
+end delay_chain;
 
-architecture Behavioral of sliding_average is
+architecture Behavioral of delay_chain is
 
 begin
 

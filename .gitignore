@@ -91,6 +91,10 @@ xst
 *.syr
 *.gise
 *.xise
+*.xdl
+*.tcl
+planAhead_run_1
+*.debug
 
 .project
 .settings

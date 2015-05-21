@@ -20,6 +20,7 @@ architecture Behavioral of user_input is
 	signal a,b,c : std_logic;
 
 begin
+	
 
 	a <= dip4_i(3) or dip4_i(2) or dip4_i(1) or dip4_i(0);
 	b <= dip8_i(7) or dip8_i(6) or dip8_i(5) or dip8_i(4) or dip8_i(3) or dip8_i(2) or dip8_i(1) or dip8_i(0);
