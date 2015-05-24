@@ -54,6 +54,7 @@ ipcore_dir
 iseconfig
 xlnx_auto_0_xdb
 xst
+planAhead_run_1
 
 *.xml
 *.log
@@ -93,7 +94,6 @@ xst
 *.xise
 *.xdl
 *.tcl
-planAhead_run_1
 *.debug
 
 .project
