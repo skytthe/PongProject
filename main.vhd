@@ -152,9 +152,17 @@ begin
 		clk_i 		=> clk_40M,
 		dip4_i		=> dip_sw_i,
 		dip8_i		=> j7_dip_sw_i,
-		btn_i 		=> j7_btn_i,
+		btn_i 		=> not j7_btn_i,
 		ps2_clk_io	=> j7_ps2_clk_io,
 		ps2_data_io	=> j7_ps2_data_io,
+		dip4_db_o      => open,
+		dip4_db_tick_o => open,
+		dip8_db_o      => open,
+		dip8_db_tick_o => open,
+		btn_db_o       => open,
+		btn_db_tick_o  => open,
+		ps2_key_down_o => open,
+		ps2_key_up_o   => open,
 		control_o	=> debug_wire
 	);
 	

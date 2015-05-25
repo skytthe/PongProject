@@ -7,7 +7,7 @@ entity PS2_interface is
 		C_CLK_FREQ_HZ        : integer := 40000000
 	);
 	port ( 
-		clk_100M_i	: in  	std_logic;
+		clk_i	: in  	std_logic;
 		
 		ps2_clk_io	: inout  std_logic;
 		ps2_data_io	: inout  std_logic;
@@ -27,8 +27,11 @@ begin
 
 	-- component instantiation (direct module reference style)
 	ps2interface_inst0 : entity work.ps2interface 
+		generic map(
+			C_CLK_FREQ_HZ => C_CLK_FREQ_HZ
+		)
 		port map(
-			clk 		=> clk_100M_i,
+			clk 		=> clk_i,
 			rst 		=> '0',
 			
 			ps2_clk  => ps2_clk_io,
@@ -46,7 +49,7 @@ begin
 	-- component instantiation (direct module reference style)
 	ps2_rx_fsm_inst0 : entity work.ps2_rx_fsm 
 		port map(
-			clk_i 		=> clk_100M_i,
+			clk_i 		=> clk_i,
 			
 			rx_data_i	=> rx_data,
 			read_i		=> read,

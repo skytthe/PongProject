@@ -156,14 +156,14 @@ use UNISIM.VComponents.all;
 -- read above for behavioral description and port definitions.
 entity ps2interface is
 	generic(
-		C_CLK_FREQ_HZ : natural := 40000000
+		C_CLK_FREQ_HZ : integer := 40000000
 	);
 	port(
-		ps2_clk  : inout std_logic;
-		ps2_data : inout std_logic;
-
 		clk      : in    std_logic;
 		rst      : in    std_logic;
+		
+		ps2_clk  : inout std_logic;
+		ps2_data : inout std_logic;
 
 		tx_data  : in    std_logic_vector(7 downto 0);
 		write    : in    std_logic;
@@ -192,12 +192,12 @@ architecture Behavioral of ps2interface is
 
 	-- upper limit for 100us delay counter.
 	-- 0.0001 * C_CLK_FREQ_HZ = 100us
-	constant CLK_P_100US 	: integer	:= 0.0001 * C_CLK_FREQ_HZ;
+	constant CLK_P_100US 	: integer	:= C_CLK_FREQ_HZ/10000;
 	constant DELAY_100US    : std_logic_vector(13 downto 0) := std_logic_vector(to_unsigned(CLK_P_100US, 14));
---	constant DELAY_100US : std_logic_vector(13 downto 0):= "10011100010000";
+--	constant DELAY_100US 	: std_logic_vector(13 downto 0):= "10011100010000";
 	-- upper limit for 20us delay counter.
 	-- 0.00002 * C_CLK_FREQ_HZ = 20us
-	constant CLK_P_20US 	: integer	:= 0.00002 * C_CLK_FREQ_HZ;
+	constant CLK_P_20US 		: integer	:= C_CLK_FREQ_HZ/50000;
 	constant DELAY_20US     : std_logic_vector(10 downto 0) := std_logic_vector(to_unsigned(CLK_P_20US, 11));
 --	constant DELAY_20US     : std_logic_vector(10 downto 0) := "11111010000";
 	-- upper limit for 63clk delay counter.
