@@ -29,8 +29,8 @@ entity main is
 		-- J7-connector: Digital (PS/2, 8-bit dip-switch, 2x push-buttons) expantion board io
 		j7_dip_sw_i 			: in  	std_logic_vector (7 downto 0);
 		j7_btn_i 				: in  	std_logic_vector (1 downto 0);
---		j7_ps2_clk_io			: inout  std_logic;
---		j7_ps2_data_io			: inout  std_logic;
+		j7_ps2_clk_io			: inout  std_logic;
+		j7_ps2_data_io			: inout  std_logic;
 		
 		-- J8-connector: VGA-output expantion board
 		j8_vga_hsync_o			: out		std_logic;
@@ -153,6 +153,8 @@ begin
 		dip4_i		=> dip_sw_i,
 		dip8_i		=> j7_dip_sw_i,
 		btn_i 		=> j7_btn_i,
+		ps2_clk_io	=> j7_ps2_clk_io,
+		ps2_data_io	=> j7_ps2_data_io,
 		control_o	=> debug_wire
 	);
 	

@@ -72,12 +72,11 @@ NET "j7_dip_sw_i<7>"  		LOC = "G6" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #J7-
 NET "j7_btn_i<0>"	 			LOC = "J4" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #BTN0 (S2) N.B. REQUIRES PULL-UP 
 NET "j7_btn_i<1>"	 			LOC = "H5" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #BTN1 (S3) N.B. REQUIRES PULL-UP 
 
-## PS2 input
-#NET "j7_ps2_data_io"			LOC = "H3" | IOSTANDARD = LVCMOS33; #PS2-Data (P1)
-#NET "j7_ps2_clk_io"			LOC = "H4" | IOSTANDARD = LVCMOS33; #PS2-CLK  (P1)
+# PS/2 input
+NET "j7_ps2_clk_io"			LOC = "H4" | IOSTANDARD = LVCMOS33; #PS2-CLK  (P1)
+NET "j7_ps2_data_io"			LOC = "H3" | IOSTANDARD = LVCMOS33; #PS2-Data (P1)
 
 ## J8 pin-header, used for: VGA-Output board
-
 NET "j8_vga_hsync_o"			LOC = "K18" | IOSTANDARD = LVCMOS33; #HSYNC (J1)
 NET "j8_vga_vsync_o"			LOC = "L19" | IOSTANDARD = LVCMOS33; #VSYNC (J1)
 
