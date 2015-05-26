@@ -96,6 +96,7 @@ planAhead_run_1
 *.tcl
 *.debug
 *.cmd
+*.vhi
 
 .project
 .settings
