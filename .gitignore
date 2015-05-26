@@ -95,6 +95,7 @@ planAhead_run_1
 *.xdl
 *.tcl
 *.debug
+*.cmd
 
 .project
 .settings
