@@ -66,12 +66,32 @@ architecture Behavioral of main is
 	signal adc_40M_vga_r	: std_logic;
 	signal adc_40M_vga_g	: std_logic;
 	signal adc_40M_vga_b	: std_logic;
-	-- mixed												
-	signal debug_wire 	: std_logic_vector(6 downto 0);
 	-- VGA busses		[hsync,vsync,data] MSB
 	signal bus_vga_sampler	: std_logic_vector(2 downto 0);
 	signal bus_vga_filter	: std_logic_vector(2 downto 0);
 	------------------------------------------------------
+
+	-- User Input signals
+	signal ui_dip4_db      	: std_logic_vector(3 downto 0);
+	signal ui_dip4_db_tick 	: std_logic_vector(3 downto 0);
+	signal ui_dip8_db      	: std_logic_vector(7 downto 0);
+	signal ui_dip8_db_tick 	: std_logic_vector(7 downto 0);
+	signal ui_btn_db       	: std_logic_vector(1 downto 0);
+	signal ui_btn_db_tick  	: std_logic_vector(1 downto 0);
+	signal ui_ps2_key_down 	: std_logic;
+	signal ui_ps2_key_up   	: std_logic;
+	
+	-- Game Controller
+	signal gc_commads			: std_logic_vector(2 downto 0);
+	
+	-- ChipScope
+	signal cs_vio_up			: std_logic;
+	signal cs_vio_down		: std_logic;
+	signal cs_vio_ena 		: std_logic;
+	
+	-- System Settings - control signals
+	signal ctrl_led			: std_logic_vector(3 downto 0);
+	signal ctrl_gc_ps2_ena	: std_logic;
 
 begin
 
@@ -155,15 +175,47 @@ begin
 		btn_i 		=> not j7_btn_i,
 		ps2_clk_io	=> j7_ps2_clk_io,
 		ps2_data_io	=> j7_ps2_data_io,
-		dip4_db_o      => open,
-		dip4_db_tick_o => open,
-		dip8_db_o      => open,
-		dip8_db_tick_o => open,
-		btn_db_o       => open,
-		btn_db_tick_o  => open,
-		ps2_key_down_o => open,
-		ps2_key_up_o   => open,
-		control_o	=> debug_wire
+		dip4_db_o      => ui_dip4_db,
+		dip4_db_tick_o => ui_dip4_db_tick,
+		dip8_db_o      => ui_dip8_db,
+		dip8_db_tick_o => ui_dip8_db_tick,
+		btn_db_o       => ui_btn_db,
+		btn_db_tick_o  => ui_btn_db_tick,
+		ps2_key_down_o => ui_ps2_key_down,
+		ps2_key_up_o   => ui_ps2_key_up
+	);
+	
+	cs : entity work.chipscope
+	port map(
+		clk_i => clk_40M,
+		cs_up =>   cs_vio_up,
+		cs_down => cs_vio_down,
+		cs_ena =>  cs_vio_ena
+	);
+	
+	game_controller : entity work.game_controller
+	port map(
+		clk_i 			=> clk_40M,
+		cs_up_i 			=> cs_vio_up,
+		cs_down_i 		=> cs_vio_down,
+		cs_ena_i 		=> cs_vio_ena,
+		ps2_up_i 		=> ui_ps2_key_up,
+		ps2_down_i 		=> ui_ps2_key_down,
+		ps2_ena_i 		=> ctrl_gc_ps2_ena,
+		btn_up_i 		=> ui_btn_db(0),
+		btn_down_i 		=> ui_btn_db(1),
+		gc_commads_o 	=> gc_commads
+	);
+	
+	system_settings : entity work.system_settings
+	port map(
+		clk_i 					=> clk_40M,
+		dip4_db_i 				=> ui_dip4_db,
+		dip4_db_tick_i 		=> ui_dip4_db_tick,
+		dip8_db_i 				=> ui_dip8_db,
+		dip8_db_tick_i 		=> ui_dip8_db_tick,
+		ctrl_gc_ps2_ena_o		=> ctrl_gc_ps2_ena,
+		ctrl_led_o 				=> ctrl_led
 	);
 	
 	debug : entity work.debug
@@ -172,7 +224,7 @@ begin
 	)
 	port map(
 		clk_i 	=> clk_40M,
-		debug_i 	=> debug_wire,
+		debug_i 	=> ctrl_led & gc_commads,
 		led_o		=> led_o
 	);
 

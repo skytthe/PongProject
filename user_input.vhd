@@ -21,15 +21,12 @@ entity user_input is
 		btn_db_o       : out 	std_logic_vector(1 downto 0);
 		btn_db_tick_o  : out		std_logic_vector(1 downto 0);
 		ps2_key_down_o : out 	std_logic;
-		ps2_key_up_o   : out 	std_logic;
-		control_o      : out 	std_logic_vector(6 downto 0)
+		ps2_key_up_o   : out 	std_logic
 	);
 end user_input;
 
 architecture Behavioral of user_input is
-	signal a, b, c                    : std_logic;
-	signal ps2_stop, ps2_up, ps2_down : std_logic;
-	signal btn_db,btn_db_tick 	 		 : std_logic_vector(1 downto 0);
+
 begin
 	generate_debounce_dip4 : for i in 0 to 3 generate
 		debounce_dip4 : entity work.debounce
@@ -71,8 +68,8 @@ begin
 			port map(
 				clk_i      => clk_i,
 				signal_i   => btn_i(i),
-				db_level_o => btn_db(i),
-				db_tick_o  => btn_db_tick(i)
+				db_level_o => btn_db_o(i),
+				db_tick_o  => btn_db_tick_o(i)
 			);
 	end generate generate_debounce_btn;
 
@@ -81,38 +78,12 @@ begin
 			C_CLK_FREQ_HZ => C_CLK_FREQ_HZ
 		)
 		port map(
-			clk_i  => clk_i,
-			ps2_clk_io  => ps2_clk_io,
-		   ps2_data_io => ps2_data_io,
-		   up_o        => ps2_up,
-		   stop_o      => ps2_stop,
-		   down_o      => ps2_down
+			clk_i  			=> clk_i,
+			ps2_clk_io  	=> ps2_clk_io,
+		   ps2_data_io 	=> ps2_data_io,
+		   ps2_key_up_o   => ps2_key_up_o,
+		   ps2_key_down_o => ps2_key_down_o
 		);
-	
---		port map(
---			clk_i  => clk_i,
---		   ps2_clk_io  => ps2_clk_io,
---		   ps2_data_io => ps2_data_io,
---		   up_o        => ps2_key_up_o,
---		   stop_o      => open,
---		   down_o      => ps2_key_down_o
---		);
-
-	ps2_key_up_o   <= ps2_up;
-	ps2_key_down_o <= ps2_down;
-	btn_db_o <= btn_db;
-	btn_db_tick_o <= btn_db_tick;
-
-	a <= dip4_i(3) or dip4_i(2) or dip4_i(1) or dip4_i(0);
-	b <= dip8_i(7) or dip8_i(6) or dip8_i(5) or dip8_i(4) or dip8_i(3) or dip8_i(2) or dip8_i(1) or dip8_i(0);
---	c <= btn_i(1) or btn_i(0);
-
-	process(clk_i)
-	begin
-		if rising_edge(clk_i) then
-			control_o <= ps2_up & ps2_stop & ps2_down & btn_db & btn_db_tick;
-		end if;
-	end process;
 
 end Behavioral;
 
