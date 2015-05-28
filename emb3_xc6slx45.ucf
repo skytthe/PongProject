@@ -72,9 +72,9 @@ NET "j7_dip_sw_i<7>"  		LOC = "G6" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #J7-
 NET "j7_btn_i<0>"	 			LOC = "J4" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #BTN0 (S2) N.B. REQUIRES PULL-UP 
 NET "j7_btn_i<1>"	 			LOC = "H5" | IOSTANDARD = LVCMOS33 | PULLUP = TRUE; #BTN1 (S3) N.B. REQUIRES PULL-UP 
 
-# PS/2 input
-NET "j7_ps2_clk_io"			LOC = "H4" | IOSTANDARD = LVCMOS33; #PS2-CLK  (P1)
-NET "j7_ps2_data_io"			LOC = "H3" | IOSTANDARD = LVCMOS33; #PS2-Data (P1)
+## PS/2 input
+#NET "j7_ps2_clk_io"			LOC = "H4" | IOSTANDARD = LVCMOS33; #PS2-CLK  (P1)
+#NET "j7_ps2_data_io"			LOC = "H3" | IOSTANDARD = LVCMOS33; #PS2-Data (P1)
 
 ## J8 pin-header, used for: VGA-Output board
 NET "j8_vga_hsync_o"			LOC = "K18" | IOSTANDARD = LVCMOS33; #HSYNC (J1)
@@ -112,8 +112,8 @@ NET "fx2_adc_r_msb_i"	LOC = "R22"	| IOSTANDARD = LVCMOS33; #FX2_A16 -> R22
 #NET "fx2_adc_r_i<9>"	LOC = "R22"	| IOSTANDARD = LVCMOS33; #FX2_A16 -> R22
 
 #VGA GREEN -> B_VIN+ (ADC B)
-NET "fx2_adc_g_clk_o"	LOC = "N20"	| IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 6; #FX2_A17 -> N20
-NET "fx2_adc_g_msb_i"	LOC = "L3"	| IOSTANDARD = LVCMOS33; #FX2_A27 -> L3
+#NET "fx2_adc_g_clk_o"	LOC = "N20"	| IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 6; #FX2_A17 -> N20
+#NET "fx2_adc_g_msb_i"	LOC = "L3"	| IOSTANDARD = LVCMOS33; #FX2_A27 -> L3
 #NET "fx2_adc_g_i<0>"	LOC = "P22"	| IOSTANDARD = LVCMOS33; #FX2_A18 -> P22
 #NET "fx2_adc_g_i<1>"	LOC = "M21"	| IOSTANDARD = LVCMOS33; #FX2_A19 -> M21
 #NET "fx2_adc_g_i<2>"	LOC = "N22"	| IOSTANDARD = LVCMOS33; #FX2_A20 -> N22
@@ -126,8 +126,8 @@ NET "fx2_adc_g_msb_i"	LOC = "L3"	| IOSTANDARD = LVCMOS33; #FX2_A27 -> L3
 #NET "fx2_adc_g_i<9>"	LOC = "L3"	| IOSTANDARD = LVCMOS33; #FX2_A27 -> L3
 
 #VGA BLUE -> C_VIN+ (ADC C)
-NET "fx2_adc_b_clk_o"	LOC = "L1"	| IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 6; #FX2_A28 -> L1
-NET "fx2_adc_b_msb_i"	LOC = "T2"	| IOSTANDARD = LVCMOS33; #FX2_A38 -> T2
+#NET "fx2_adc_b_clk_o"	LOC = "L1"	| IOSTANDARD = LVTTL | SLEW = SLOW | DRIVE = 6; #FX2_A28 -> L1
+#NET "fx2_adc_b_msb_i"	LOC = "T2"	| IOSTANDARD = LVCMOS33; #FX2_A38 -> T2
 #NET "fx2_adc_b_i<0>"	LOC = "M1"	| IOSTANDARD = LVCMOS33; #FX2_A29 -> M1
 #NET "fx2_adc_b_i<1>"	LOC = "M2"	| IOSTANDARD = LVCMOS33; #FX2_A30 -> M2
 #NET "fx2_adc_b_i<2>"	LOC = "N1"	| IOSTANDARD = LVCMOS33; #FX2_A31 -> N1

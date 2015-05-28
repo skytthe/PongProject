@@ -1,33 +1,5 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    01:27:23 05/26/2015 
--- Design Name: 
--- Module Name:    chipscope - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
--- Uncomment the following library declaration if using
--- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
-
--- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
 
 entity chipscope is
 	port(
@@ -56,6 +28,7 @@ architecture Behavioral of chipscope is
 
 	signal controlVIO 		: std_logic_vector(35 downto 0); 
 	signal cs_vio_async_o	: std_logic_vector(2 downto 0);
+	
 begin
 
 	chipscope_icon : cs_icon
@@ -69,7 +42,7 @@ begin
 		ASYNC_OUT => cs_vio_async_o
 	);
 	
-	process(clk_i)
+	sync_cs_vio : process(clk_i)
 	begin
 		if rising_edge(clk_i) then
 			cs_up		<= cs_vio_async_o(0);

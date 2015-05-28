@@ -18,6 +18,7 @@ entity game_controller is
 end game_controller;
 
 architecture Behavioral of game_controller is
+
 	signal control_up,control_down	:	std_logic;
 	
 	-- FSM

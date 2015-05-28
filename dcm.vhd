@@ -76,8 +76,8 @@ port
  (-- Clock in ports
   clk_200M_i           : in     std_logic;
   -- Clock out ports
-  clk_40M          : out    std_logic;
-  clk_40M_180      : out    std_logic
+  clk_40M_o        	  : out    std_logic;
+  clk_40M_180_o    	  : out    std_logic
  );
 end dcm;
 
@@ -160,12 +160,12 @@ begin
 
   clkout1_buf : BUFG
   port map
-   (O   => clk_40M,
+   (O   => clk_40M_o,
     I   => clkfx);
 	 
   clkout2_buf : BUFG
   port map
-   (O   => clk_40M_180,
+   (O   => clk_40M_180_o,
     I   => clkfx180);
 
 

@@ -7,30 +7,60 @@ entity filter is
 		C_CLK_FREQ_HZ     : integer := 40000000
 	);
 	port(
-		clk_i 			: in  std_logic;
-		--
-		vga_hsync_i		: in  std_logic;
-		vga_vsync_i		: in  std_logic;
-		vga_data_i		: in  std_logic;
-		--
-		vga_hsync_o		: out std_logic;
-		vga_vsync_o		: out std_logic;
-		vga_data_o		: out std_logic
+		clk_i 					: in  std_logic;
+		-- input from vga sampler
+		hsync_i				: in  std_logic;
+		vsync_i				: in  std_logic;
+		data_i				: in  std_logic;
+		pixel_x_i			: in	std_logic_vector(10 downto 0);
+		pixel_y_i			: in	std_logic_vector(9 downto 0);
+		-- output for graphics engine
+		filter_ge_hsync_o		: out std_logic;
+		filter_ge_vsync_o		: out std_logic;
+		filter_ge_data_o		: out std_logic;
+		filter_ge_pixel_x_o	: out	std_logic_vector(10 downto 0);
+		filter_ge_pixel_y_o	: out std_logic_vector(9 downto 0);
+		-- output for game state detector
+		filter_gs_hsync_o		: out std_logic;
+		filter_gs_vsync_o		: out std_logic;
+		filter_gs_data_o		: out std_logic;
+		filter_gs_pixel_x_o	: out	std_logic_vector(10 downto 0);
+		filter_gs_pixel_y_o	: out std_logic_vector(9 downto 0)
 	);
 end filter;
 
 architecture Behavioral of filter is
-
+	signal sliding_average_data : std_logic;
 begin
 
-	name : process (clk_i) is
+	-- Sliding average filter
+	sliding_average : entity work.sliding_average
+	generic map(
+		C_CLK_FREQ_HZ	=> 40000000,
+		FILTER_LENGTH	=> 5
+	)
+	port map(
+		clk_i		=> clk_i,
+		data_i	=> data_i,
+		data_o	=> sliding_average_data
+	);	
+
+	process (clk_i) is
 	begin
 		if rising_edge(clk_i) then
-			vga_hsync_o <= vga_hsync_i;
-			vga_vsync_o <= vga_vsync_i;
-			vga_data_o  <= vga_data_i;
+		filter_ge_hsync_o		<= hsync_i;
+		filter_ge_vsync_o		<= vsync_i;
+		filter_ge_data_o		<= sliding_average_data;
+		filter_ge_pixel_x_o	<= pixel_x_i;
+		filter_ge_pixel_y_o	<= pixel_y_i;
+
+		filter_gs_hsync_o		<= hsync_i;
+		filter_gs_vsync_o		<= vsync_i;
+		filter_gs_data_o		<= sliding_average_data;
+		filter_gs_pixel_x_o	<= pixel_x_i;
+		filter_gs_pixel_y_o	<= pixel_y_i;
 		end if;
-	end process name;
+	end process;
 	
 end Behavioral;
 

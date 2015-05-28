@@ -12,16 +12,16 @@ entity user_input is
 		dip4_i         : in  	std_logic_vector(3 downto 0);
 		dip8_i         : in  	std_logic_vector(7 downto 0);
 		btn_i          : in  	std_logic_vector(1 downto 0);
-		ps2_clk_io     : inout  std_logic;
-		ps2_data_io    : inout  std_logic;
+--		ps2_clk_io     : inout  std_logic;
+--		ps2_data_io    : inout  std_logic;
 		dip4_db_o      : out 	std_logic_vector(3 downto 0);
 		dip4_db_tick_o : out 	std_logic_vector(3 downto 0);
 		dip8_db_o      : out 	std_logic_vector(7 downto 0);
 		dip8_db_tick_o : out 	std_logic_vector(7 downto 0);
 		btn_db_o       : out 	std_logic_vector(1 downto 0);
 		btn_db_tick_o  : out		std_logic_vector(1 downto 0);
-		ps2_key_down_o : out 	std_logic;
-		ps2_key_up_o   : out 	std_logic
+		ps2_key_up_o   : out 	std_logic;
+		ps2_key_down_o : out 	std_logic
 	);
 end user_input;
 
@@ -73,14 +73,16 @@ begin
 			);
 	end generate generate_debounce_btn;
 
+	-- TODO:	implement actual PS/2 keyboard interface
+	--			up / down keys emulated with push btns
 	ps2_interface : entity work.PS2_interface
 		generic map(
 			C_CLK_FREQ_HZ => C_CLK_FREQ_HZ
 		)
 		port map(
 			clk_i  			=> clk_i,
-			ps2_clk_io  	=> ps2_clk_io,
-		   ps2_data_io 	=> ps2_data_io,
+			ps2_clk_io  	=> btn_i(0),--ps2_clk_io,
+		   ps2_data_io 	=> btn_i(1),--ps2_data_io,
 		   ps2_key_up_o   => ps2_key_up_o,
 		   ps2_key_down_o => ps2_key_down_o
 		);
