@@ -55,6 +55,8 @@ iseconfig
 xlnx_auto_0_xdb
 xst
 planAhead_run_1
+build
+PongProject/scripts/*.png
 
 *.xml
 *.log
@@ -93,7 +95,6 @@ planAhead_run_1
 *.gise
 *.xise
 *.xdl
-*.tcl
 *.debug
 *.cmd
 *.vhi
