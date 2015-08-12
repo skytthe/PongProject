@@ -61,7 +61,7 @@ begin
 			vsync_o => vsync_o
 		);
 	
-	VGAsampler : entity work.vga_sampler
+	VGAsampler : entity work.tb_vga_sampler
 		port map(
 			r_i     => r_o,
 			g_i     => g_o,

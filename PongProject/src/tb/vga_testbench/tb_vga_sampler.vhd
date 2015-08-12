@@ -7,7 +7,7 @@ use ieee.std_logic_textio.all;
 
 use work.log_pkg.all;
 
-entity vga_sampler is
+entity tb_vga_sampler is
 	generic(
 --		G_CLK_FREQ_HZ	: integer := 40000000;
 		G_PXL_CLK_PRD	: time    := 25.001 ns
@@ -19,9 +19,9 @@ entity vga_sampler is
 		hsync_i : in std_logic;
 		vsync_i	: in std_logic
 	);
-end entity vga_sampler;
+end entity tb_vga_sampler;
 
-architecture Behavioral of vga_sampler is
+architecture Behavioral of tb_vga_sampler is
 	
 		----------------
 		-- 640x480@60 --
