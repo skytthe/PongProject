@@ -3,7 +3,8 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 use work.constants.all;
-use work.log_pkg.all;
+use work.functions.all;
+use work.components.all;
 
 entity filter is
 	port (

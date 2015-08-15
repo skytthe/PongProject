@@ -57,6 +57,8 @@ xst
 planAhead_run_1
 build
 PongProject/scripts/*.png
+PongProject/old/*
+PongProject/_vhdl_Pong_Projects/*
 
 *.xml
 *.log

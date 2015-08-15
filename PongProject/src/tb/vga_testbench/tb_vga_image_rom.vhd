@@ -5,15 +5,19 @@ use ieee.numeric_std.all;
 use ieee.std_logic_textio.all;
 use std.textio.all;
 
-entity image_rom is
+use work.constants.all;
+use work.functions.all;
+use work.components.all;
+
+entity tb_image_rom is
 	port (
 		clk_i 	: in std_logic;
 		adr_i 	: in std_logic_vector(18 downto 0);
 		data_o	: out std_logic
 	);
-end entity image_rom;
+end entity tb_image_rom;
 
-architecture Behavioral of image_rom is
+architecture Behavioral of tb_image_rom is
 	
 	type ROM is array(0 to 800*600) of std_logic;
 	

@@ -1,9 +1,10 @@
 library ieee;
 use ieee.std_logic_1164.all;
+
 package constants is
-		----------------
-		-- 640x480@60 --
-		----------------
+--		----------------
+--		-- 640x480@60 --
+--		----------------
 --		constant C_H_Pulse 			: integer := 96;
 --		constant C_H_BP 			: integer := 48;
 --		constant C_H_PX 			: integer := 640;
@@ -47,7 +48,10 @@ package constants is
 	constant C_BAT_HEIGHT		: integer := 199;
 	constant C_BALL_WIDTH		: integer := 19;
 	constant C_BALL_HEIGHT		: integer := 19;
-		
+	
+	constant C_CLK_FREQ_HZ		: integer := 40000000;
+	constant C_CLK_PRD_NS		: time    := 25 ns;
+	
 	constant C_ADC_WIDTH		: natural := 10;
 	constant C_DAC_WIDTH		: natural := 3;
 

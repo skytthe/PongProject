@@ -2,10 +2,11 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity model is
-	generic(
-		C_CLK_FREQ_HZ     : integer := 40000000
-	);
+use work.constants.all;
+use work.functions.all;
+use work.components.all;
+
+entity tb_vga_model is
 	port (
 		clk_i 	: in  std_logic;
 		r_i		: in  std_logic_vector(9 downto 0);
@@ -19,9 +20,9 @@ entity model is
 		hsync_o : out std_logic;
 		vsync_o	: out std_logic		
 	);
-end entity model;
+end entity tb_vga_model;
 
-architecture Behavioral of model is
+architecture Behavioral of tb_vga_model is
 	
 begin
 

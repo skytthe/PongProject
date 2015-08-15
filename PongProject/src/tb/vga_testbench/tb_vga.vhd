@@ -2,7 +2,9 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-use std.textio.all;
+use work.constants.all;
+use work.functions.all;
+use work.components.all;
 
 --library UNISIM;
 --use UNISIM.VComponents.all;
@@ -12,8 +14,6 @@ end entity tb_vga;
 
 architecture Behavioral of tb_vga is
 	-- Clocks
-	constant C_CLK_FREQ_HZ  : integer := 40000000;
-	constant clk_40M_period : time      := 25 ns;
 	signal clk_40M          : std_logic := '0';
 
 	-- routing signals
@@ -28,13 +28,13 @@ begin
 	clk_40M_process : process
 	begin
 		clk_40M <= '0';
-		wait for clk_40M_period / 2;
+		wait for C_CLK_PRD_NS / 2;
 		clk_40M <= '1';
-		wait for clk_40M_period / 2;
+		wait for C_CLK_PRD_NS / 2;
 	end process;
 
 	-- Component declarations
-	VGAgenerator : entity work.vga_generator
+	VGAgenerator : entity work.tb_vga_generator
 		port map(
 			r_o     => r_i,
 			g_o     => g_i,
@@ -43,10 +43,7 @@ begin
 			vsync_o => vsync_i
 		);
 		
-	PongModel : entity work.model
-		generic map(
-			C_CLK_FREQ_HZ => C_CLK_FREQ_HZ
-		)
+	PongModel : entity work.tb_vga_model
 		port map(
 			clk_i   => clk_40M,
 			r_i     => r_i,
@@ -72,8 +69,9 @@ begin
 
 	-- Stimulus process
 	stim_proc : process
+
 	begin
-		wait for clk_40M_period*800*600;
+
 	end process;
 
 end architecture Behavioral;

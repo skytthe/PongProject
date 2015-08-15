@@ -5,10 +5,13 @@ use ieee.numeric_std.all;
 use std.textio.all;
 use ieee.std_logic_textio.all;
 
-use work.log_pkg.all;
+use work.constants.all;
+use work.functions.all;
+use work.components.all;
 
 entity tb_vga_sampler is
 	generic(
+		G_FILE_NAME		: string	:= "../output/data_output.txt";
 --		G_CLK_FREQ_HZ	: integer := 40000000;
 		G_PXL_CLK_PRD	: time    := 25.001 ns
 	);
@@ -22,55 +25,13 @@ entity tb_vga_sampler is
 end entity tb_vga_sampler;
 
 architecture Behavioral of tb_vga_sampler is
-	
-		----------------
-		-- 640x480@60 --
-		----------------
---		constant C_H_Pulse 	: integer := 96;
---		constant C_H_BP 		: integer := 48;
---		constant C_H_PX 		: integer := 640;
---		constant C_H_FP 		: integer := 16;
---		
---		constant C_HS_OFFSET  	 : integer := C_H_Pulse+C_H_BP;
---		constant C_HS_OFFSET2  	 : integer := C_H_Pulse+C_H_BP+C_H_PX;
---		constant C_PIXEL_PR_LINE : integer := C_H_FP+C_H_Pulse+C_H_BP+C_H_PX;		
---			
---		constant C_V_Pulse 	: integer := 2;
---		constant C_V_BP 		: integer := 33;
---		constant C_V_LN 		: integer := 480;
---		constant C_V_FP 		: integer := 10;
---		
---		constant C_VS_OFFSET 		: integer := C_V_Pulse+C_V_BP;	
---		constant C_VS_OFFSET2		: integer := C_V_Pulse+C_V_BP+C_V_LN;
---		constant C_LINES_PR_FRAME 	: integer := C_V_FP+C_V_Pulse+C_V_BP+C_V_LN	
-
-	----------------
-	-- 800x600@60 --
-	----------------
-	constant C_H_Pulse 	: integer := 128;
-	constant C_H_BP 		: integer := 88;
-	constant C_H_PX 		: integer := 800;
-	constant C_H_FP 		: integer := 40;
-		
-	constant C_HS_OFFSET 	 : integer := C_H_Pulse+C_H_BP;	
-	constant C_HS_OFFSET2 	 : integer := C_H_Pulse+C_H_BP+C_H_PX;	
-	constant C_PIXEL_PR_LINE : integer := C_H_FP+C_H_Pulse+C_H_BP+C_H_PX;		
-			
-	constant C_V_Pulse 	: integer := 4;
-	constant C_V_BP 		: integer := 23;
-	constant C_V_LN 		: integer := 600;
-	constant C_V_FP 		: integer := 1;
-		
-	constant C_VS_OFFSET 		: integer := C_V_Pulse+C_V_BP;
-	constant C_VS_OFFSET2		: integer := C_V_Pulse+C_V_BP+C_V_LN;
-	constant C_LINES_PR_FRAME 	: integer := C_V_FP+C_V_Pulse+C_V_BP+C_V_LN;	
 
 	signal pxl_clk : std_logic;
 
 	signal pixel_cnt_reg : unsigned(log2r(C_PIXEL_PR_LINE)-1 downto 0) := to_unsigned(C_PIXEL_PR_LINE-1	,log2r(C_PIXEL_PR_LINE));
 	signal pixel_cnt_nxt : unsigned(log2r(C_PIXEL_PR_LINE)-1 downto 0);
 	
-	signal line_cnt_reg : unsigned(log2r(C_LINES_PR_FRAME)-1 downto 0) := to_unsigned(C_LINES_PR_FRAME-1	,log2r(C_LINES_PR_FRAME));
+	signal line_cnt_reg : unsigned(log2r(C_LINES_PR_FRAME)-1 downto 0) := to_unsigned(C_LINES_PR_FRAME-1,log2r(C_LINES_PR_FRAME));
 	signal line_cnt_nxt : unsigned(log2r(C_LINES_PR_FRAME)-1 downto 0);	
 
 	-- data delay
@@ -84,7 +45,7 @@ architecture Behavioral of tb_vga_sampler is
 	signal vsync_f_egde : std_logic;
 	signal vsync_f_egde_reg : std_logic;
 	
-	file output_file : text open write_mode is "../output/data_output.txt";
+	file output_file : text open write_mode is G_FILE_NAME;
 
 begin
 
