@@ -45,7 +45,7 @@ package constants is
 	constant C_LINES_PR_FRAME 	: integer := C_V_FP+C_V_Pulse+C_V_BP+C_V_LN;	
 	
 	constant C_BAT_WIDTH		: integer := 19;
-	constant C_BAT_HEIGHT		: integer := 199;
+	constant C_BAT_HEIGHT		: integer := 99;
 	constant C_BALL_WIDTH		: integer := 19;
 	constant C_BALL_HEIGHT		: integer := 19;
 	
