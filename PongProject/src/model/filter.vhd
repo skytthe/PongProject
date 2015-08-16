@@ -8,10 +8,9 @@ use work.components.all;
 
 entity filter is
 	port (
-		clk : in std_logic;
-		rst : in std_logic;
+		clk_i : in std_logic;
 		
-		control		: in  std_logic_vector(2 downto 0);
+		control_i		: in  std_logic_vector(2 downto 0);
 		
 		color_i		: in  std_logic;
 		hsync_i 	: in  std_logic;

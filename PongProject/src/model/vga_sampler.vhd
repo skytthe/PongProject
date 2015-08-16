@@ -9,7 +9,6 @@ use work.components.all;
 entity vga_sampler is
 	port (
 		clk_i		: in std_logic;
-		rst			: in std_logic;
 		
 		r_i			: in  std_logic_vector(C_ADC_WIDTH-1 downto 0);
 		g_i			: in  std_logic_vector(C_ADC_WIDTH-1 downto 0);

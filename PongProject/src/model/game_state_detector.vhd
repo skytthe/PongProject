@@ -8,8 +8,7 @@ use work.components.all;
 
 entity game_state_detector is
 	port (
-		clk : in std_logic;
-		rst : in std_logic;
+		clk_i : in std_logic;
 		
 		color_gsd_i		: in  std_logic;
 		pixel_cnt_gsd_i	: in  std_logic_vector(log2r(C_PIXEL_PR_LINE)-1 downto 0);
