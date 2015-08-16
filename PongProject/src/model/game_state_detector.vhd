@@ -4,6 +4,7 @@ use ieee.numeric_std.all;
 
 use work.constants.all;
 use work.functions.all;
+use work.components.all;
 
 entity game_state_detector is
 	port (
@@ -35,4 +36,3 @@ architecture Behavioral of game_state_detector is
 begin
 	
 end architecture Behavioral;
-

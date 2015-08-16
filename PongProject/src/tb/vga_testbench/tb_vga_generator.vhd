@@ -24,29 +24,21 @@ architecture Behavioral of tb_vga_generator is
 
 	signal pxl_clk			: std_logic := '0';
 	
-	signal pixel_cnt_comp	: std_logic_vector(log2r(C_PIXEL_PR_LINE)-1 downto 0);
-	signal line_cnt_comp	: std_logic_vector(log2r(C_LINES_PR_FRAME)-1 downto 0);
-	
-	---
-	
-	signal pixel_cnt_reg : unsigned(log2r(C_PIXEL_PR_LINE)-1 downto 0) := to_unsigned(C_PIXEL_PR_LINE-1, log2r(C_PIXEL_PR_LINE));
-	signal pixel_cnt_nxt : unsigned(log2r(C_PIXEL_PR_LINE)-1 downto 0);
-	
-	signal line_cnt_reg : unsigned(log2r(C_LINES_PR_FRAME)-1 downto 0) := to_unsigned(C_LINES_PR_FRAME-1, log2r(C_LINES_PR_FRAME));
-	signal line_cnt_nxt : unsigned(log2r(C_LINES_PR_FRAME)-1 downto 0);	
+	signal pixel_cnt	: unsigned(log2r(C_PIXEL_PR_LINE)-1 downto 0);
+	signal line_cnt	: unsigned(log2r(C_LINES_PR_FRAME)-1 downto 0);
 
 	signal mem_cnt_reg : unsigned(log2r(C_H_PX*C_V_LN)-1 downto 0) := (others=>'0');
 	signal mem_cnt_nxt : unsigned(log2r(C_H_PX*C_V_LN)-1 downto 0);
 	signal mem_data	: std_logic := '0';
 	
-	signal r : std_logic_vector(C_ADC_WIDTH-1 downto 0);
-	signal g : std_logic_vector(C_ADC_WIDTH-1 downto 0);
-	signal b : std_logic_vector(C_ADC_WIDTH-1 downto 0);
+	signal r : std_logic_vector(G_COLOR_WIDTH-1 downto 0);
+	signal g : std_logic_vector(G_COLOR_WIDTH-1 downto 0);
+	signal b : std_logic_vector(G_COLOR_WIDTH-1 downto 0);
 	
-	type slv_vector is array(G_COLOR_WIDTH-1 downto 0) of std_logic_vector(C_ADC_WIDTH-1 downto 0);
-	signal r_reg : slv_vector;
-	signal g_reg : slv_vector;
-	signal b_reg : slv_vector;
+	type slv_vector is array(C_ADC_DELAY-1 downto 0) of std_logic_vector(G_COLOR_WIDTH-1 downto 0);
+	signal r_reg : slv_vector := ((others=> (others=>'0')));
+	signal g_reg : slv_vector := ((others=> (others=>'0')));
+	signal b_reg : slv_vector := ((others=> (others=>'0')));
 	
 begin
 	
@@ -68,70 +60,49 @@ begin
 			rst_i     => '0',
 			hsync_o   => hsync_o,
 			vsync_o   => vsync_o,
-			pixel_cnt => pixel_cnt_comp,
-			line_cnt  => line_cnt_comp
+			unsigned(pixel_cnt) => pixel_cnt,
+			unsigned(line_cnt)  => line_cnt
 		);
 	
 	-- adc delay simulator
 	process(pxl_clk)
 	begin
 		if rising_edge(pxl_clk) then
-			r_reg <= r_reg(G_COLOR_WIDTH-2 downto 0) & r;
-			g_reg <= g_reg(G_COLOR_WIDTH-2 downto 0) & g;
-			b_reg <= b_reg(G_COLOR_WIDTH-2 downto 0) & b;
+			r_reg <= r_reg(C_ADC_DELAY-2 downto 0) & r;
+			g_reg <= g_reg(C_ADC_DELAY-2 downto 0) & g;
+			b_reg <= b_reg(C_ADC_DELAY-2 downto 0) & b;
 		end if;
 	end process;
-	r_o <= r;
-	g_o <= g;
-	b_o <= b;
+	-- with ADC delay
+	r_o <= r_reg(C_ADC_DELAY-1);
+	g_o <= g_reg(C_ADC_DELAY-1);
+	b_o <= b_reg(C_ADC_DELAY-1);
+	-- without ADC delay
+--	r_o <= r;
+--	g_o <= g;
+--	b_o <= b;
 	
 	
 	
-	
-	-- HS and VS generator
-	process(pxl_clk)
-	begin
-		if rising_edge(pxl_clk) then		
-			pixel_cnt_reg <= pixel_cnt_nxt;
-			line_cnt_reg <= line_cnt_nxt;
-		end if;
-	end process;
-	
-	
-	pixel_cnt_nxt <=	pixel_cnt_reg+1 when pixel_cnt_reg<C_PIXEL_PR_LINE-1 
-												 else 
-							(others=>'0');
-
-	line_cnt_nxt  <=	line_cnt_reg+1 when	pixel_cnt_reg=C_PIXEL_PR_LINE-1 and 
-														line_cnt_reg<C_LINES_PR_FRAME-1 
-												else 
-							(others=>'0')  when 	pixel_cnt_reg=C_PIXEL_PR_LINE-1 
-												else
-							line_cnt_reg;
-	
-	hsync_o <= '0' when pixel_cnt_reg < C_H_pulse else '1';
-	vsync_o <= '0' when line_cnt_reg  < C_V_Pulse else '1';
-
-
 	-- pixel color generator
-	r <=	(others=>'1')	when	(pixel_cnt_reg > (C_HS_OFFSET-1)	and 
-											 pixel_cnt_reg < (C_HS_OFFSET2)	and 
-											 line_cnt_reg  > (C_VS_OFFSET-1)	and 
-											 line_cnt_reg  < (C_VS_OFFSET2))	and 
+	r <=	(others=>'1')	when	(pixel_cnt > (C_HS_OFFSET-1)	and 
+											 pixel_cnt < (C_HS_OFFSET2)	and 
+											 line_cnt  > (C_VS_OFFSET-1)	and 
+											 line_cnt  < (C_VS_OFFSET2))	and 
 											 mem_data = '1'
 									else
 				(others=>'0');
-	g <=	(others=>'1')	when	(pixel_cnt_reg > (C_HS_OFFSET-1)	and 
-											 pixel_cnt_reg < (C_HS_OFFSET2)	and 
-											 line_cnt_reg  > (C_VS_OFFSET-1)	and 
-											 line_cnt_reg  < (C_VS_OFFSET2))	and 
+	g <=	(others=>'1')	when	(pixel_cnt > (C_HS_OFFSET-1)	and 
+											 pixel_cnt < (C_HS_OFFSET2)	and 
+											 line_cnt  > (C_VS_OFFSET-1)	and 
+											 line_cnt  < (C_VS_OFFSET2))	and 
 											 mem_data = '1'
 									else
 				(others=>'0');
-	b <=	(others=>'1')	when	(pixel_cnt_reg > (C_HS_OFFSET-1)	and 
-											 pixel_cnt_reg < (C_HS_OFFSET2)	and 
-											 line_cnt_reg  > (C_VS_OFFSET-1)	and 
-											 line_cnt_reg  < (C_VS_OFFSET2))	and 
+	b <=	(others=>'1')	when	(pixel_cnt > (C_HS_OFFSET-1)	and 
+											 pixel_cnt < (C_HS_OFFSET2)	and 
+											 line_cnt  > (C_VS_OFFSET-1)	and 
+											 line_cnt  < (C_VS_OFFSET2))	and 
 											 mem_data = '1'
 									else
 				(others=>'0');
@@ -144,15 +115,15 @@ begin
 		end if;
 	end process;
 
-	mem_cnt_nxt <=	mem_cnt_reg+1 	when	(pixel_cnt_reg > (C_HS_OFFSET-1) and 
-													 pixel_cnt_reg < (C_HS_OFFSET2)  and 
-													 line_cnt_reg  > (C_VS_OFFSET-1) and 
-													 line_cnt_reg  < (C_VS_OFFSET2-1))
+	mem_cnt_nxt <=	mem_cnt_reg+1 	when	(pixel_cnt > (C_HS_OFFSET-1) and 
+													 pixel_cnt < (C_HS_OFFSET2)  and 
+													 line_cnt  > (C_VS_OFFSET-1) and 
+													 line_cnt  < (C_VS_OFFSET2-1))
 											else 
-						mem_cnt_reg+1 	when	(pixel_cnt_reg > (C_HS_OFFSET-1) and 
-													 pixel_cnt_reg < (C_HS_OFFSET2-1)and 
-													 line_cnt_reg  > (C_VS_OFFSET-1) and 
-													 line_cnt_reg  < (C_VS_OFFSET2))
+						mem_cnt_reg+1 	when	(pixel_cnt > (C_HS_OFFSET-1) and 
+													 pixel_cnt < (C_HS_OFFSET2-1)and 
+													 line_cnt  > (C_VS_OFFSET-1) and 
+													 line_cnt  < (C_VS_OFFSET2))
 											else 
 						mem_cnt_reg;
 	
@@ -164,4 +135,3 @@ begin
 	);
 	
 end architecture Behavioral;
-

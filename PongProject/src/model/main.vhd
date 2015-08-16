@@ -2,7 +2,7 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    23:05:52 08/11/2015 
+-- Create Date:    16:05:41 08/16/2015 
 -- Design Name: 
 -- Module Name:    main - Behavioral 
 -- Project Name: 
@@ -19,7 +19,6 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values

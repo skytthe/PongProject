@@ -37,6 +37,4 @@ begin
 		end if;
 	end process model;
 	
-	
-	
 end architecture Behavioral;

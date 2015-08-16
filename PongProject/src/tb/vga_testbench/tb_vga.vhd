@@ -67,11 +67,11 @@ begin
 			vsync_i => vsync_o
 		);
 
-	-- Stimulus process
-	stim_proc : process
-
-	begin
-
-	end process;
+--	-- Stimulus process
+--	stim_proc : process
+--
+--	begin
+--
+--	end process;
 
 end architecture Behavioral;

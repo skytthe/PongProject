@@ -49,7 +49,7 @@ package body functions is
 				temp := temp + 1; 
 	    	end if;
 	  	end loop;
-		return std_logic_vector(to_unsigned(temp,log2r(s'range)));
+		return std_logic_vector(to_unsigned(temp,log2r(s'length)));
 	end function count_ones;
 	
 end functions;

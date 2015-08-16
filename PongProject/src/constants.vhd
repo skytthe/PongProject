@@ -52,7 +52,13 @@ package constants is
 	constant C_CLK_FREQ_HZ		: integer := 40000000;
 	constant C_CLK_PRD_NS		: time    := 25 ns;
 	
+	constant C_ADC_DELAY		: natural := 5;
 	constant C_ADC_WIDTH		: natural := 10;
 	constant C_DAC_WIDTH		: natural := 3;
+	
 
-end package constants;
+end constants;
+
+package body constants is
+
+end constants;

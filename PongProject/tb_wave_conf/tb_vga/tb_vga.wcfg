@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wave_config>
+   <wave_state>
+   </wave_state>
+   <db_ref_list>
+      <db_ref path="C:/workspace/PongProject/PongProject/build/tb_vga_isim_beh.wdb" id="1" type="auto">
+         <top_modules>
+            <top_module name="components" />
+            <top_module name="constants" />
+            <top_module name="functions" />
+            <top_module name="numeric_std" />
+            <top_module name="std_logic_1164" />
+            <top_module name="std_logic_textio" />
+            <top_module name="tb_vga" />
+            <top_module name="textio" />
+         </top_modules>
+      </db_ref>
+   </db_ref_list>
+   <WVObjectSize size="29" />
+   <wvobject fp_name="/tb_vga/clk_40m" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">clk_40m</obj_property>
+      <obj_property name="ObjectShortName">clk_40m</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/r_i" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r_i[9:0]</obj_property>
+      <obj_property name="ObjectShortName">r_i[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/b_i" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">b_i[9:0]</obj_property>
+      <obj_property name="ObjectShortName">b_i[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/g_i" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">g_i[9:0]</obj_property>
+      <obj_property name="ObjectShortName">g_i[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/hsync_i" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">hsync_i</obj_property>
+      <obj_property name="ObjectShortName">hsync_i</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/vsync_i" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">vsync_i</obj_property>
+      <obj_property name="ObjectShortName">vsync_i</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/r_o" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r_o[2:0]</obj_property>
+      <obj_property name="ObjectShortName">r_o[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/b_o" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">b_o[2:0]</obj_property>
+      <obj_property name="ObjectShortName">b_o[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/g_o" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">g_o[2:0]</obj_property>
+      <obj_property name="ObjectShortName">g_o[2:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/hsync_o" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">hsync_o</obj_property>
+      <obj_property name="ObjectShortName">hsync_o</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/vsync_o" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">vsync_o</obj_property>
+      <obj_property name="ObjectShortName">vsync_o</obj_property>
+   </wvobject>
+   <wvobject fp_name="divider12" type="divider">
+      <obj_property name="label">VGA generator</obj_property>
+      <obj_property name="DisplayName">label</obj_property>
+      <obj_property name="BkColor">128 128 255</obj_property>
+      <obj_property name="TextColor">230 230 230</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/r_o" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r_o[9:0]</obj_property>
+      <obj_property name="ObjectShortName">r_o[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/g_o" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">g_o[9:0]</obj_property>
+      <obj_property name="ObjectShortName">g_o[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/b_o" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">b_o[9:0]</obj_property>
+      <obj_property name="ObjectShortName">b_o[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/hsync_o" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">hsync_o</obj_property>
+      <obj_property name="ObjectShortName">hsync_o</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/vsync_o" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">vsync_o</obj_property>
+      <obj_property name="ObjectShortName">vsync_o</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/pxl_clk" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">pxl_clk</obj_property>
+      <obj_property name="ObjectShortName">pxl_clk</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/pixel_cnt" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">pixel_cnt[10:0]</obj_property>
+      <obj_property name="ObjectShortName">pixel_cnt[10:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/line_cnt" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">line_cnt[9:0]</obj_property>
+      <obj_property name="ObjectShortName">line_cnt[9:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/mem_cnt_reg" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mem_cnt_reg[18:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_cnt_reg[18:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/mem_cnt_nxt" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">mem_cnt_nxt[18:0]</obj_property>
+      <obj_property name="ObjectShortName">mem_cnt_nxt[18:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/mem_data" type="logic" db_ref_id="1">
+      <obj_property name="ElementShortName">mem_data</obj_property>
+      <obj_property name="ObjectShortName">mem_data</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/r" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r[9:0]</obj_property>
+      <obj_property name="ObjectShortName">r[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/g" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">g[9:0]</obj_property>
+      <obj_property name="ObjectShortName">g[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/b" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">b[9:0]</obj_property>
+      <obj_property name="ObjectShortName">b[9:0]</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/r_reg" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">r_reg[9:0]</obj_property>
+      <obj_property name="ObjectShortName">r_reg[9:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/g_reg" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">g_reg[9:0]</obj_property>
+      <obj_property name="ObjectShortName">g_reg[9:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+   <wvobject fp_name="/tb_vga/VGAgenerator/b_reg" type="array" db_ref_id="1">
+      <obj_property name="ElementShortName">b_reg[9:0]</obj_property>
+      <obj_property name="ObjectShortName">b_reg[9:0]</obj_property>
+      <obj_property name="Radix">UNSIGNEDDECRADIX</obj_property>
+   </wvobject>
+</wave_config>

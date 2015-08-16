@@ -8,12 +8,12 @@ use work.components.all;
 
 entity vga_generator is
 	port (
-		clk_i		: in  std_logic;
-		rst_i		: in  std_logic;
-		hsync_o 	: out std_logic;
-		vsync_o 	: out std_logic;
-		pixel_cnt	: out std_logic_vector(log2r(C_LINES_PR_FRAME)-1 downto 0);
-		line_cnt	: out std_logic_vector(log2r(C_LINES_PR_FRAME)-1 downto 0)	
+		clk_i			: in  std_logic;
+		rst_i			: in  std_logic;
+		hsync_o 		: out std_logic := '1';
+		vsync_o 		: out std_logic := '1';
+		pixel_cnt	: out std_logic_vector(log2r(C_PIXEL_PR_LINE)-1 downto 0)  := (others=>'0');
+		line_cnt		: out std_logic_vector(log2r(C_LINES_PR_FRAME)-1 downto 0) := (others=>'0')
 	);
 end entity vga_generator;
 
@@ -35,15 +35,15 @@ begin
 	end process;
 	
 	
-	pixel_cnt_nxt <=	(others=>'0')	when rst_i = '1' else
-						pixel_cnt_reg+1 when pixel_cnt_reg<C_PIXEL_PR_LINE-1 else 
-						(others=>'0');
+	pixel_cnt_nxt <=	(others=>'0')		when rst_i = '1' else
+							pixel_cnt_reg+1 	when pixel_cnt_reg<C_PIXEL_PR_LINE-1 else 
+							(others=>'0');
 
-	line_cnt_nxt  <=	(others=>'0')	when rst_i = '1' else
-						line_cnt_reg+1	when pixel_cnt_reg=C_PIXEL_PR_LINE-1 and 
-											 line_cnt_reg<C_LINES_PR_FRAME-1 else 
-						(others=>'0')	when pixel_cnt_reg=C_PIXEL_PR_LINE-1 else
-						line_cnt_reg;
+	line_cnt_nxt  <=	(others=>'0')		when rst_i = '1' else
+							line_cnt_reg+1		when pixel_cnt_reg=C_PIXEL_PR_LINE-1 and 
+													line_cnt_reg<C_LINES_PR_FRAME-1 else 
+							(others=>'0')		when pixel_cnt_reg=C_PIXEL_PR_LINE-1 else
+							line_cnt_reg;
 	
 	hsync_o <= '1' when rst_i = '1' else '0' when pixel_cnt_reg < C_H_pulse else '1';
 	vsync_o <= '1' when rst_i = '1' else '0' when line_cnt_reg  < C_V_Pulse else '1';
