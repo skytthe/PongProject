@@ -36,4 +36,15 @@ architecture Behavioral of filter is
 	
 begin
 	
+	color_ge_o		<= color_i;
+	hsync_ge_o 		<= hsync_i;
+	vsync_ge_o 		<= vsync_i;
+	pixel_cnt_ge_o	<= pixel_cnt_i;
+	line_cnt_ge_o	<= line_cnt_i;
+	
+	color_gsd_o		<= color_i;
+	pixel_cnt_gsd_o	<= pixel_cnt_i;
+	line_cnt_gsd_o	<= line_cnt_i;
+	
+	
 end architecture Behavioral;

@@ -30,4 +30,10 @@ architecture Behavioral of graphics_engine is
 	
 begin
 	
+	r_o <= color_i & color_i & color_i;
+	g_o <= color_i & color_i & color_i;
+	b_o <= color_i & color_i & color_i;
+	hsync_o <= hsync_i;
+	vsync_o <= vsync_i;
+	
 end architecture Behavioral;

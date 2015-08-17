@@ -26,6 +26,65 @@ end entity vga_sampler;
 
 architecture Behavioral of vga_sampler is
 	
-begin
+	signal hsync_f_edge : std_logic;
+	signal vsync_f_edge : std_logic;
 	
+	signal pixel_cnt_reg : unsigned(log2r(C_PIXEL_PR_LINE)-1 downto 0) := to_unsigned(C_PIXEL_PR_LINE-1	,log2r(C_PIXEL_PR_LINE));
+	signal pixel_cnt_nxt : unsigned(log2r(C_PIXEL_PR_LINE)-1 downto 0);
+	
+	signal line_cnt_reg : unsigned(log2r(C_LINES_PR_FRAME)-1 downto 0) := to_unsigned(C_LINES_PR_FRAME-1,log2r(C_LINES_PR_FRAME));
+	signal line_cnt_nxt : unsigned(log2r(C_LINES_PR_FRAME)-1 downto 0);	
+	
+	
+begin
+	-- down sample vga color data to black/white
+	color_o <= r_i(C_ADC_WIDTH-1);
+	
+	-- delay sync signals
+	sync_delay : entity work.delay_chain_SRLC16E
+	generic map(
+		width => 2
+	)
+	port map(
+		clk_i => clk_i,
+		delay => std_logic_vector(to_unsigned(C_ADC_DELAY-1,4)),
+		data_i(0) => hsync_i,
+		data_i(1) => vsync_i,
+		data_o(0) => hsync_o,
+		data_o(1) => vsync_o
+	);
+	
+	-- sync edge detectors
+	hsync_edge_detector : entity work.edge_detector
+		port map(
+			clk_i    => clk_i,
+			signal_i => hsync_i,
+			edge_o   => hsync_f_edge
+		);
+	vsync_edge_detector : entity work.edge_detector
+		port map(
+			clk_i    => clk_i,
+			signal_i => vsync_i,
+			edge_o   => vsync_f_edge
+		);
+		
+	-- HS and VS counters
+	process(clk_i)
+	begin
+		if rising_edge(clk_i) then		
+			pixel_cnt_reg <= pixel_cnt_nxt;
+			line_cnt_reg <= line_cnt_nxt;
+		end if;
+	end process;
+	pixel_cnt_o	<= std_logic_vector(pixel_cnt_reg);
+	line_cnt_o	<= std_logic_vector(line_cnt_reg);
+	
+	pixel_cnt_nxt <=	(others=>'0')	when hsync_f_edge = '1' else
+						pixel_cnt_reg+1;
+					 
+	line_cnt_nxt <=		(others=>'0')	when vsync_f_edge = '1' else
+						line_cnt_reg+1	when hsync_f_edge = '1' else
+						line_cnt_reg;
+
+
 end architecture Behavioral;
