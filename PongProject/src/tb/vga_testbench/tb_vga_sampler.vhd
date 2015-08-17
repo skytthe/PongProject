@@ -52,7 +52,7 @@ begin
 	-- pixel sampler clock generator
 	process
 	begin
-		wait for G_PXL_CLK_PRD/2;
+		--wait for G_PXL_CLK_PRD/2;
 		loop
 			pxl_clk <= '0';
 			wait for G_PXL_CLK_PRD/2;
