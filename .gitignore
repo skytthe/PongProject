@@ -103,3 +103,46 @@ PongProject/_vhdl_Pong_Projects/*
 
 .project
 .settings
+
+# =========================
+# scripts
+# =========================
+/scripts/tb_vga/build/*
+/scripts/tb_vga/res/*
+/scripts/tb_vga/data_output.txt
+
+# =========================
+# Netbeans
+# =========================
+/Tools/java_utilities/compareImages/build/*
+/Tools/java_utilities/compareImages/build.xml
+/Tools/java_utilities/compareImages/manifest.mf
+/Tools/java_utilities/compareImages/nbproject/*
+
+/Tools/java_utilities/filter_median/build/*
+/Tools/java_utilities/filter_median/build.xml
+/Tools/java_utilities/filter_median/manifest.mf
+/Tools/java_utilities/filter_median/nbproject/*
+
+/Tools/java_utilities/list2png/build/*
+/Tools/java_utilities/list2png/build.xml
+/Tools/java_utilities/list2png/manifest.mf
+/Tools/java_utilities/list2png/nbproject/*
+
+/Tools/java_utilities/model/build/*
+/Tools/java_utilities/model/build.xml
+/Tools/java_utilities/model/manifest.mf
+/Tools/java_utilities/model/nbproject/*
+
+/Tools/java_utilities/png2list/build/*
+/Tools/java_utilities/png2list/build.xml
+/Tools/java_utilities/png2list/manifest.mf
+/Tools/java_utilities/png2list/nbproject/*
+
+
+/Tools/java_utilities/pongmodel2png/build/*
+/Tools/java_utilities/pongmodel2png/build.xml
+/Tools/java_utilities/pongmodel2png/manifest.mf
+/Tools/java_utilities/pongmodel2png/nbproject/*
+
+/Tools/java_utilities/png2list/dist/
