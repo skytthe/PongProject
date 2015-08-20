@@ -18,26 +18,19 @@ import javax.imageio.ImageIO;
 public class List2png {
 
     final static Charset ENCODING = StandardCharsets.UTF_8;
-    final static int c_image_width = 800;
-    final static int c_image_height = 600;
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
 
-        int image_width = c_image_width;
-        int image_height = c_image_height;
-
-        System.out.println(args.length);
-
         if (args.length != 4) {
             System.err.println("ERROR:  Exactly four argument must be given: "
                     + "a txt file which will be converted to a png image, image width, image height, output_path");
             System.exit(1);
         }
-        image_width = Integer.parseInt(args[1]);
-        image_height = Integer.parseInt(args[2]);
+        int image_width = Integer.parseInt(args[1]);
+        int image_height = Integer.parseInt(args[2]);
         String output_path = args[3];
         
         System.out.println("List2png:");
